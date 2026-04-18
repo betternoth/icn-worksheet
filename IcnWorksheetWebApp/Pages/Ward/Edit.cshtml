@@ -1,0 +1,87 @@
+@page "{id:int}"
+@model EditModel
+@{
+    ViewData["Title"] = "Edit Ward";
+}
+
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Update Ward Information</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" asp-for="Input.Id" />
+
+                        <!-- Ward Name -->
+                        <div class="mb-3">
+                            <label for="Input_Name" class="form-label">
+                                <strong>Ward Name</strong>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="Input_Name" asp-for="Input.Name" 
+                                   placeholder="Enter ward name" required>
+                            <span class="text-danger" asp-validation-for="Input.Name"></span>
+                        </div>
+
+                        <!-- Group (Dropdown) -->
+                        <div class="mb-3">
+                            <label for="Input_Group" class="form-label">
+                                <strong>Group</strong>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="Input_Group" asp-for="Input.Group" required>
+                                <option value="">-- Select Group --</option>
+                                @foreach (var group in Model.Groups)
+                                {
+                                    <option value="@group" selected="@(Model.Input.Group == group)">@group</option>
+                                }
+                            </select>
+                            <span class="text-danger" asp-validation-for="Input.Group"></span>
+                        </div>
+
+                        <!-- Type (Dropdown) -->
+                        <div class="mb-3">
+                            <label for="Input_Type" class="form-label">
+                                <strong>Type</strong>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="Input_Type" asp-for="Input.Type" required>
+                                <option value="">-- Select Type --</option>
+                                @foreach (var type in Model.Types)
+                                {
+                                    <option value="@type" selected="@(Model.Input.Type == type)">@type</option>
+                                }
+                            </select>
+                            <span class="text-danger" asp-validation-for="Input.Type"></span>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Update Ward
+                            </button>
+                            <a href="/Ward/Index" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

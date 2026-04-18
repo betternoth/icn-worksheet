@@ -16,6 +16,7 @@ public class ApplicationDbContext : DbContext
     // Domain entities
     public DbSet<Patient> Patients { get; set; }
     public DbSet<WardInfectionSurveillance> WardInfectionSurveillance { get; set; }
+    public DbSet<Ward> Wards { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,6 +61,31 @@ public class ApplicationDbContext : DbContext
 
             entity.Property(e => e.PatientName)
                 .HasMaxLength(200);
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        });
+
+        // Configure Ward entity
+        modelBuilder.Entity<Ward>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Group)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.Type)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            // Create unique index on Name
+            entity.HasIndex(e => e.Name)
+                .IsUnique();
 
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
