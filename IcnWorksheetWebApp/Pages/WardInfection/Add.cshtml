@@ -1,0 +1,228 @@
+@page
+@model AddModel
+@{
+    ViewData["Title"] = "Add Ward Infection Record";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-4">@ViewData["Title"]</h1>
+            
+            @if (ModelState.Any(ms => ms.Value.Errors.Any()))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">Validation Errors</h4>
+                    <ul class="mb-0">
+                        @foreach (var modelState in ViewData.ModelState.Values)
+                        {
+                            @foreach (var error in modelState.Errors)
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        }
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <form method="post" class="needs-validation">
+                <div class="row">
+                    <!-- Ward Information Section -->
+                    <div class="col-12 mb-4">
+                        <h5 class="border-bottom pb-2">Ward Information</h5>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="WardName" class="form-label">Ward Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="WardName" asp-for="Input.WardName" required>
+                        <span class="text-danger" asp-validation-for="Input.WardName"></span>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label for="Month" class="form-label">Month <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="Month" asp-for="Input.Month" min="1" max="12" required>
+                        <span class="text-danger" asp-validation-for="Input.Month"></span>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label for="Year" class="form-label">Year <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="Year" asp-for="Input.Year" min="2000" max="2100" required>
+                        <span class="text-danger" asp-validation-for="Input.Year"></span>
+                    </div>
+
+                    <!-- Patient Information Section -->
+                    <div class="col-12 mb-4 mt-3">
+                        <h5 class="border-bottom pb-2">Patient Information</h5>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="PatientName" class="form-label">Patient Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="PatientName" asp-for="Input.PatientName" required>
+                        <span class="text-danger" asp-validation-for="Input.PatientName"></span>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="HospitalNumber" class="form-label">HN (Hospital Number) <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="HospitalNumber" asp-for="Input.HospitalNumber" required>
+                        <span class="text-danger" asp-validation-for="Input.HospitalNumber"></span>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="AdmissionNumber" class="form-label">AN (Admission Number)</label>
+                        <input type="text" class="form-control" id="AdmissionNumber" asp-for="Input.AdmissionNumber">
+                        <span class="text-danger" asp-validation-for="Input.AdmissionNumber"></span>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label for="Gender" class="form-label">Gender</label>
+                        <select class="form-control" id="Gender" asp-for="Input.Gender">
+                            <option value="">Select Gender</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="Input.Gender"></span>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label for="Age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="Age" asp-for="Input.Age" min="0" max="150">
+                        <span class="text-danger" asp-validation-for="Input.Age"></span>
+                    </div>
+
+                    <!-- Admission & Transfer Information Section -->
+                    <div class="col-12 mb-4 mt-3">
+                        <h5 class="border-bottom pb-2">Admission & Transfer Dates</h5>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="AdmissionDate" class="form-label">Admission Date</label>
+                        <input type="datetime-local" class="form-control" id="AdmissionDate" asp-for="Input.AdmissionDate">
+                        <span class="text-danger" asp-validation-for="Input.AdmissionDate"></span>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="TransferOutDate1" class="form-label">Transfer Out Date (1st)</label>
+                        <input type="datetime-local" class="form-control" id="TransferOutDate1" asp-for="Input.TransferOutDate1">
+                        <span class="text-danger" asp-validation-for="Input.TransferOutDate1"></span>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="TransferInDate1" class="form-label">Transfer In Date (1st)</label>
+                        <input type="datetime-local" class="form-control" id="TransferInDate1" asp-for="Input.TransferInDate1">
+                        <span class="text-danger" asp-validation-for="Input.TransferInDate1"></span>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="DischargeDate" class="form-label">Discharge Date</label>
+                        <input type="datetime-local" class="form-control" id="DischargeDate" asp-for="Input.DischargeDate">
+                        <span class="text-danger" asp-validation-for="Input.DischargeDate"></span>
+                    </div>
+
+                    <!-- Medical Information Section -->
+                    <div class="col-12 mb-4 mt-3">
+                        <h5 class="border-bottom pb-2">Medical Information</h5>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="Diagnosis" class="form-label">Diagnosis (Dx)</label>
+                        <input type="text" class="form-control" id="Diagnosis" asp-for="Input.Diagnosis" placeholder="Primary diagnosis">
+                        <span class="text-danger" asp-validation-for="Input.Diagnosis"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="InfectionSite" class="form-label">Infection Site</label>
+                        <select class="form-control" id="InfectionSite" asp-for="Input.InfectionSite">
+                            <option value="">Select Site</option>
+                            <option value="Respiratory">Respiratory</option>
+                            <option value="UTI">UTI (Urinary Tract)</option>
+                            <option value="Bloodstream">Bloodstream</option>
+                            <option value="Wound">Wound</option>
+                            <option value="GI">GI Tract</option>
+                            <option value="Skin">Skin/Soft Tissue</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="Input.InfectionSite"></span>
+                    </div>
+
+                    <!-- Laboratory Information Section -->
+                    <div class="col-12 mb-4 mt-3">
+                        <h5 class="border-bottom pb-2">Laboratory Information</h5>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="SpecimenType" class="form-label">Specimen Type (ประเภทสิ่งส่งตรวจ)</label>
+                        <select class="form-control" id="SpecimenType" asp-for="Input.SpecimenType">
+                            <option value="">Select Specimen Type</option>
+                            <option value="Blood">Blood</option>
+                            <option value="Urine">Urine</option>
+                            <option value="Sputum">Sputum</option>
+                            <option value="Wound">Wound Swab</option>
+                            <option value="CSF">CSF</option>
+                            <option value="Stool">Stool</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="Input.SpecimenType"></span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="SpecimenSubmissionDate" class="form-label">Specimen Submission Date</label>
+                        <input type="datetime-local" class="form-control" id="SpecimenSubmissionDate" asp-for="Input.SpecimenSubmissionDate">
+                        <span class="text-danger" asp-validation-for="Input.SpecimenSubmissionDate"></span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="InfectionDate" class="form-label">Infection Date</label>
+                        <input type="datetime-local" class="form-control" id="InfectionDate" asp-for="Input.InfectionDate">
+                        <span class="text-danger" asp-validation-for="Input.InfectionDate"></span>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label for="CultureResult" class="form-label">Culture Result (ผลเพาะเชื้อ)</label>
+                        <textarea class="form-control" id="CultureResult" asp-for="Input.CultureResult" rows="2" placeholder="Organism identified, Resistance profile, etc."></textarea>
+                        <span class="text-danger" asp-validation-for="Input.CultureResult"></span>
+                    </div>
+
+                    <!-- Risk Factor Section -->
+                    <div class="col-12 mb-4 mt-3">
+                        <h5 class="border-bottom pb-2">Risk Factor</h5>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label for="RiskFactor" class="form-label">Risk Factor (ปัจจัย)</label>
+                        <select class="form-control" id="RiskFactor" asp-for="Input.RiskFactor">
+                            <option value="">Select Risk Factor</option>
+                            <option value="Central Line">Central Line</option>
+                            <option value="Foley Catheter">Foley Catheter</option>
+                            <option value="Ventilator">Ventilator</option>
+                            <option value="Surgery">Recent Surgery</option>
+                            <option value="Immunocompromised">Immunocompromised</option>
+                            <option value="Age>65">Age > 65 years</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="Input.RiskFactor"></span>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="col-12 mt-4">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Save Record
+                            </button>
+                            <a href="/WardInfection/Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

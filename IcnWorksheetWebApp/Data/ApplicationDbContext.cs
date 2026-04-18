@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using IcnWorksheet.Domain;
 
 namespace IcnWorksheet.Data;
 
@@ -12,14 +13,56 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    // Add your DbSets here
-    // public DbSet<YourEntity> YourEntities { get; set; }
+    // Domain entities
+    public DbSet<Patient> Patients { get; set; }
+    public DbSet<WardInfectionSurveillance> WardInfectionSurveillance { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
-        // Configure your entities here
-        // modelBuilder.Entity<YourEntity>().HasKey(e => e.Id);
+
+        // Configure Patient entity
+        modelBuilder.Entity<Patient>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.FirstName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.LastName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.HospitalNumber)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            // Create unique index on HospitalNumber
+            entity.HasIndex(e => e.HospitalNumber)
+                .IsUnique();
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        });
+
+        // Configure WardInfectionSurveillance entity
+        modelBuilder.Entity<WardInfectionSurveillance>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.WardName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.HospitalNumber)
+                .HasMaxLength(50);
+
+            entity.Property(e => e.PatientName)
+                .HasMaxLength(200);
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        });
     }
 }

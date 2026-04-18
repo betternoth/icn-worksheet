@@ -1,0 +1,180 @@
+@page "{id:int}"
+@model ViewModel
+@{
+    ViewData["Title"] = "Ward Infection Record Details";
+}
+
+<div class="container mt-5">
+    <div class="row mb-3">
+        <div class="col-12">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+    @if (Model.Record == null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> Record not found.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <!-- Ward Information Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">Ward Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h6 class="text-muted">Ward Name</h6>
+                                <p>@Model.Record.WardName</p>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <h6 class="text-muted">Month</h6>
+                                <p>@Model.Record.Month</p>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <h6 class="text-muted">Year</h6>
+                                <p>@Model.Record.Year</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient Information Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="card-title mb-0">Patient Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h6 class="text-muted">Patient Name</h6>
+                                <p>@Model.Record.PatientName</p>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <h6 class="text-muted">HN</h6>
+                                <p>@Model.Record.HospitalNumber</p>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <h6 class="text-muted">AN</h6>
+                                <p>@Model.Record.AdmissionNumber</p>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <h6 class="text-muted">Gender</h6>
+                                <p>@Model.Record.Gender</p>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <h6 class="text-muted">Age</h6>
+                                <p>@Model.Record.Age</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admission & Dates Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="card-title mb-0">Admission & Transfer Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <h6 class="text-muted">Admission Date</h6>
+                                <p>@(Model.Record.AdmissionDate?.ToString("g") ?? "N/A")</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <h6 class="text-muted">Transfer Out (1st)</h6>
+                                <p>@(Model.Record.TransferOutDate1?.ToString("g") ?? "N/A")</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <h6 class="text-muted">Transfer In (1st)</h6>
+                                <p>@(Model.Record.TransferInDate1?.ToString("g") ?? "N/A")</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <h6 class="text-muted">Discharge Date</h6>
+                                <p>@(Model.Record.DischargeDate?.ToString("g") ?? "N/A")</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Information Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">Medical Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h6 class="text-muted">Diagnosis (Dx)</h6>
+                                <p>@Model.Record.Diagnosis</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h6 class="text-muted">Infection Site</h6>
+                                <p>@Model.Record.InfectionSite</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Laboratory Information Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="card-title mb-0">Laboratory Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <h6 class="text-muted">Specimen Type</h6>
+                                <p>@Model.Record.SpecimenType</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <h6 class="text-muted">Submission Date</h6>
+                                <p>@(Model.Record.SpecimenSubmissionDate?.ToString("g") ?? "N/A")</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <h6 class="text-muted">Infection Date</h6>
+                                <p>@(Model.Record.InfectionDate?.ToString("g") ?? "N/A")</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <h6 class="text-muted">Culture Result</h6>
+                                <p>@(string.IsNullOrEmpty(Model.Record.CultureResult) ? "N/A" : Model.Record.CultureResult)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk Factor Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="card-title mb-0">Risk Factor</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="text-muted">Risk Factor (ปัจจัย)</h6>
+                        <p>@Model.Record.RiskFactor</p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="row mt-4 mb-4">
+                    <div class="col-12">
+                        <div class="d-flex gap-2">
+                            <a href="/WardInfection/Edit/@Model.Record.Id" class="btn btn-primary">
+                                <i class="bi bi-pencil"></i> Edit Record
+                            </a>
+                            <a href="/WardInfection/Index" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

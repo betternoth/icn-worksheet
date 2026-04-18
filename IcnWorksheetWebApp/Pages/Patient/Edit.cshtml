@@ -1,0 +1,68 @@
+@page "{id:int}"
+@model EditModel
+@{
+    ViewData["Title"] = "Edit Patient";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="mb-4">@ViewData["Title"]</h1>
+
+            @if (ModelState.Any(ms => ms.Value.Errors.Any()))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">Validation Errors</h4>
+                    <ul class="mb-0">
+                        @foreach (var modelState in ViewData.ModelState.Values)
+                        {
+                            @foreach (var error in modelState.Errors)
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        }
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <form method="post" class="needs-validation">
+                <input type="hidden" asp-for="Input.Id" />
+
+                <div class="mb-3">
+                    <label for="FirstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="FirstName" asp-for="Input.FirstName" required placeholder="Enter first name">
+                    <span class="text-danger" asp-validation-for="Input.FirstName"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="LastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="LastName" asp-for="Input.LastName" required placeholder="Enter last name">
+                    <span class="text-danger" asp-validation-for="Input.LastName"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="HospitalNumber" class="form-label">HN (Hospital Number) <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="HospitalNumber" asp-for="Input.HospitalNumber" required placeholder="Enter hospital number">
+                    <span class="text-danger" asp-validation-for="Input.HospitalNumber"></span>
+                    <small class="form-text text-muted">Unique identifier for the patient in the hospital system</small>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i> Update Patient
+                    </button>
+                    <a href="/Patient/Index" class="btn btn-secondary">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

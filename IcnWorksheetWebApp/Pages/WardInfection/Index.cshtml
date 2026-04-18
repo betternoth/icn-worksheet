@@ -1,0 +1,136 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Ward Infection Surveillance Records";
+}
+
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <a href="/WardInfection/Add" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Add New Record
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Records == null || !Model.Records.Any())
+            {
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle"></i> No records found. 
+                    <a href="/WardInfection/Add">Click here to add a new record</a>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Ward</th>
+                                <th>Patient</th>
+                                <th>HN</th>
+                                <th>Month/Year</th>
+                                <th>Gender</th>
+                                <th>Age</th>
+                                <th>Infection Site</th>
+                                <th>Culture Result</th>
+                                <th>Infection Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var record in Model.Records)
+                            {
+                                <tr>
+                                    <td>@record.WardName</td>
+                                    <td>@record.PatientName</td>
+                                    <td>@record.HospitalNumber</td>
+                                    <td>@($"{record.Month:D2}/{record.Year}")</td>
+                                    <td>@record.Gender</td>
+                                    <td>@record.Age</td>
+                                    <td>@record.InfectionSite</td>
+                                    <td>@(string.IsNullOrEmpty(record.CultureResult) ? "N/A" : record.CultureResult.Substring(0, Math.Min(30, record.CultureResult.Length)) + "...")</td>
+                                    <td>
+                                        @if (record.InfectionDate.HasValue)
+                                        {
+                                            @record.InfectionDate.Value.ToString("MM/dd/yyyy")
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <a href="/WardInfection/Edit/@record.Id" class="btn btn-outline-primary" title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="/WardInfection/View/@record.Id" class="btn btn-outline-info" title="View">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="@record.Id" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Record</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this record? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('deleteModal').addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var recordId = button.getAttribute('data-id');
+            var form = document.getElementById('deleteForm');
+            form.action = '/WardInfection/Delete/' + recordId;
+        });
+    </script>
+}

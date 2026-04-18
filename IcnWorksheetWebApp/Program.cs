@@ -8,10 +8,13 @@ builder.Services.AddRazorPages();
 
 // Infrastructure Layer: Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite("Data Source=app.db"));
+    options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=icn;Integrated Security=true;TrustServerCertificate=True;"));
 
 // Infrastructure Layer: Generic Repository
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+// Infrastructure Layer: Specific Repositories
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 
 // Application Layer: Services
 // Add your application services here
