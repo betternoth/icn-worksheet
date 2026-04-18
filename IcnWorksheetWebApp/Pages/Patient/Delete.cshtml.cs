@@ -4,6 +4,8 @@ using IcnWorksheet.Data;
 
 namespace IcnWorksheet.Pages.Patient;
 
+using PatientEntity = IcnWorksheet.Domain.Patient;
+
 public class DeleteModel : PageModel
 {
     private readonly ILogger<DeleteModel> _logger;
@@ -13,6 +15,29 @@ public class DeleteModel : PageModel
     {
         _logger = logger;
         _patientRepository = patientRepository;
+    }
+
+    public PatientEntity? Patient { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(int id)
+    {
+        try
+        {
+            Patient = await _patientRepository.GetByIdAsync(id);
+            if (Patient == null)
+            {
+                _logger.LogWarning("Patient not found for deletion with id: {Id}", id);
+                TempData["Error"] = "Patient not found.";
+                return RedirectToPage("Index");
+            }
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading patient for deletion with id: {Id}", id);
+            TempData["Error"] = "An error occurred while loading the patient.";
+            return RedirectToPage("Index");
+        }
     }
 
     public async Task<IActionResult> OnPostAsync(int id)
