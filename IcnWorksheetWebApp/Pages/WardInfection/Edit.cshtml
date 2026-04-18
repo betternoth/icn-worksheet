@@ -36,7 +36,21 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="WardName" class="form-label">Ward Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="WardName" asp-for="Input.WardName" required>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="WardName" 
+                            asp-for="Input.WardName" 
+                            list="wardNameList"
+                            placeholder="Type to search wards..."
+                            required
+                            autocomplete="off">
+                        <datalist id="wardNameList">
+                            @foreach (var wardName in Model.WardNames)
+                            {
+                                <option value="@wardName"></option>
+                            }
+                        </datalist>
                         <span class="text-danger" asp-validation-for="Input.WardName"></span>
                     </div>
 

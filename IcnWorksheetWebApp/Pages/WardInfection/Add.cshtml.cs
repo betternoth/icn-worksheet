@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using IcnWorksheet.Data;
 using IcnWorksheet.Models;
 
 namespace IcnWorksheet.Pages.WardInfection;
@@ -7,27 +8,45 @@ namespace IcnWorksheet.Pages.WardInfection;
 public class AddModel : PageModel
 {
     private readonly ILogger<AddModel> _logger;
+    private readonly IWardRepository _wardRepository;
 
-    public AddModel(ILogger<AddModel> logger)
+    public AddModel(ILogger<AddModel> logger, IWardRepository wardRepository)
     {
         _logger = logger;
+        _wardRepository = wardRepository;
     }
 
     [BindProperty]
     public WardInfectionSurveillanceDto Input { get; set; } = new();
 
-    public IActionResult OnGet()
+    public List<string> WardNames { get; set; } = new();
+
+    public async Task OnGetAsync()
     {
-        // Initialize default values
-        Input.Year = DateTime.Now.Year;
-        Input.Month = DateTime.Now.Month;
-        return Page();
+        try
+        {
+            // Load ward names for autocomplete
+            var wards = await _wardRepository.GetAllAsync();
+            WardNames = wards.Select(w => w.Name).OrderBy(n => n).ToList();
+
+            // Initialize default values
+            Input.Year = DateTime.Now.Year;
+            Input.Month = DateTime.Now.Month;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading wards for autocomplete");
+        }
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
+            // Reload ward names if validation fails
+            var wards = await _wardRepository.GetAllAsync();
+            WardNames = wards.Select(w => w.Name).OrderBy(n => n).ToList();
+
             _logger.LogWarning("Model validation failed for Add Ward Infection Record");
             return Page();
         }
