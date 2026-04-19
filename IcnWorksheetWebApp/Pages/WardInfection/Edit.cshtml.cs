@@ -80,6 +80,8 @@ public class EditModel : PageModel
                 AdmissionDate = record.AdmissionDate,
                 TransferOutDate1 = record.TransferOutDate1,
                 TransferInDate1 = record.TransferInDate1,
+                TransferFromWard = record.TransferFromWard,
+                TransferToWard = record.TransferToWard,
                 DischargeDate = record.DischargeDate,
                 DischargeType = record.DischargeType,
                 Diagnosis = record.Diagnosis,
@@ -150,6 +152,8 @@ public class EditModel : PageModel
             record.AdmissionDate = Input.AdmissionDate;
             record.TransferOutDate1 = Input.TransferOutDate1;
             record.TransferInDate1 = Input.TransferInDate1;
+            record.TransferFromWard = Input.TransferFromWard;
+            record.TransferToWard = Input.TransferToWard;
             record.DischargeDate = Input.DischargeDate;
             record.DischargeType = Input.DischargeType;
             record.Diagnosis = Input.Diagnosis;

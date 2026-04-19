@@ -47,6 +47,8 @@ public class IndexModel : PageModel
                     AdmissionDate = record.AdmissionDate,
                     TransferOutDate1 = record.TransferOutDate1,
                     TransferInDate1 = record.TransferInDate1,
+                    TransferFromWard = record.TransferFromWard,
+                    TransferToWard = record.TransferToWard,
                     DischargeDate = record.DischargeDate,
                     DischargeType = record.DischargeType,
                     Diagnosis = record.Diagnosis,

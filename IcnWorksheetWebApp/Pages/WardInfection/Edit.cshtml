@@ -113,25 +113,25 @@
 
                     <div class="col-md-3 mb-3">
                         <label for="AdmissionDate" class="form-label">Admission Date</label>
-                        <input type="datetime-local" class="form-control" id="AdmissionDate" asp-for="Input.AdmissionDate">
+                        <input type="date" class="form-control" id="AdmissionDate" asp-for="Input.AdmissionDate">
                         <span class="text-danger" asp-validation-for="Input.AdmissionDate"></span>
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="TransferOutDate1" class="form-label">Transfer Out Date (1st)</label>
-                        <input type="datetime-local" class="form-control" id="TransferOutDate1" asp-for="Input.TransferOutDate1">
+                        <input type="date" class="form-control" id="TransferOutDate1" asp-for="Input.TransferOutDate1">
                         <span class="text-danger" asp-validation-for="Input.TransferOutDate1"></span>
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="TransferInDate1" class="form-label">Transfer In Date (1st)</label>
-                        <input type="datetime-local" class="form-control" id="TransferInDate1" asp-for="Input.TransferInDate1">
+                        <input type="date" class="form-control" id="TransferInDate1" asp-for="Input.TransferInDate1">
                         <span class="text-danger" asp-validation-for="Input.TransferInDate1"></span>
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="DischargeDate" class="form-label">Discharge Date</label>
-                        <input type="datetime-local" class="form-control" id="DischargeDate" asp-for="Input.DischargeDate">
+                        <input type="date" class="form-control" id="DischargeDate" asp-for="Input.DischargeDate">
                         <span class="text-danger" asp-validation-for="Input.DischargeDate"></span>
                     </div>
 
@@ -143,6 +143,44 @@
                             <option value="Dead">Dead</option>
                         </select>
                         <span class="text-danger" asp-validation-for="Input.DischargeType"></span>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="TransferFromWard" class="form-label">Transfer From Ward</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="TransferFromWard" 
+                            asp-for="Input.TransferFromWard" 
+                            list="wardNameList"
+                            placeholder="Type to search wards..."
+                            autocomplete="off">
+                        <datalist id="wardNameList">
+                            @foreach (var wardName in Model.WardNames)
+                            {
+                                <option value="@wardName"></option>
+                            }
+                        </datalist>
+                        <span class="text-danger" asp-validation-for="Input.TransferFromWard"></span>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="TransferToWard" class="form-label">Transfer To Ward</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="TransferToWard" 
+                            asp-for="Input.TransferToWard" 
+                            list="wardNameList2"
+                            placeholder="Type to search wards..."
+                            autocomplete="off">
+                        <datalist id="wardNameList2">
+                            @foreach (var wardName in Model.WardNames)
+                            {
+                                <option value="@wardName"></option>
+                            }
+                        </datalist>
+                        <span class="text-danger" asp-validation-for="Input.TransferToWard"></span>
                     </div>
 
                     <!-- Medical Information Section -->
@@ -193,13 +231,13 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="SpecimenSubmissionDate" class="form-label">Specimen Submission Date</label>
-                        <input type="datetime-local" class="form-control" id="SpecimenSubmissionDate" asp-for="Input.SpecimenSubmissionDate">
+                        <input type="date" class="form-control" id="SpecimenSubmissionDate" asp-for="Input.SpecimenSubmissionDate">
                         <span class="text-danger" asp-validation-for="Input.SpecimenSubmissionDate"></span>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="InfectionDate" class="form-label">Infection Date</label>
-                        <input type="datetime-local" class="form-control" id="InfectionDate" asp-for="Input.InfectionDate">
+                        <input type="date" class="form-control" id="InfectionDate" asp-for="Input.InfectionDate">
                         <span class="text-danger" asp-validation-for="Input.InfectionDate"></span>
                     </div>
 

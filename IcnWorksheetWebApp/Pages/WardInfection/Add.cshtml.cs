@@ -103,6 +103,8 @@ public class AddModel : PageModel
                 AdmissionDate = Input.AdmissionDate,
                 TransferOutDate1 = Input.TransferOutDate1,
                 TransferInDate1 = Input.TransferInDate1,
+                TransferFromWard = Input.TransferFromWard,
+                TransferToWard = Input.TransferToWard,
                 DischargeDate = Input.DischargeDate,
                 DischargeType = Input.DischargeType,
                 Diagnosis = Input.Diagnosis,
