@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using IcnWorksheet.Data;
+using IcnWorksheet.Domain;
 using IcnWorksheet.Models;
 
 namespace IcnWorksheet.Pages.WardInfection;
@@ -182,6 +183,59 @@ public class EditModel : PageModel
             _logger.LogError(ex, "Error updating ward infection record with id: {Id}", id);
             ModelState.AddModelError(string.Empty, "An error occurred while updating the record.");
             return Page();
+        }
+    }
+
+    public async Task<IActionResult> OnPostCreatePatientAsync(
+        [FromBody] CreatePatientRequest request)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.FirstName))
+                return BadRequest(new { message = "First Name is required" });
+
+            if (string.IsNullOrWhiteSpace(request.LastName))
+                return BadRequest(new { message = "Last Name is required" });
+
+            if (string.IsNullOrWhiteSpace(request.HospitalNumber))
+                return BadRequest(new { message = "Hospital Number is required" });
+
+            // Check if hospital number already exists
+            var existingPatient = await _patientRepository.GetByHospitalNumberAsync(request.HospitalNumber);
+            if (existingPatient != null)
+                return BadRequest(new { message = "Patient with this Hospital Number already exists" });
+
+            // Create new patient
+            var newPatient = new Domain.Patient
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                HospitalNumber = request.HospitalNumber,
+                Gender = request.Gender,
+                Age = request.Age
+            };
+
+            await _patientRepository.AddAsync(newPatient);
+            await _patientRepository.SaveChangesAsync();
+
+            _logger.LogInformation(
+                "New patient created: {FirstName} {LastName} (HN: {HospitalNumber})",
+                request.FirstName,
+                request.LastName,
+                request.HospitalNumber
+            );
+
+            return new JsonResult(new
+            {
+                id = newPatient.Id,
+                fullName = newPatient.GetFullName(),
+                hospitalNumber = newPatient.HospitalNumber
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating patient");
+            return StatusCode(500, new { message = "An error occurred while creating the patient" });
         }
     }
 }
