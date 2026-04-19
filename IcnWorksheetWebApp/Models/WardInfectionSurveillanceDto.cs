@@ -45,6 +45,12 @@ public class WardInfectionSurveillanceDto : BaseDto
     /// <summary>วันที่รับย้ายเข้า Ward ลำดับ 1 (Transfer In Date - First)</summary>
     public DateTime? TransferInDate1 { get; set; }
 
+    /// <summary>ย้ายจาก Ward (Transfer From Ward)</summary>
+    public string TransferFromWard { get; set; } = string.Empty;
+
+    /// <summary>ย้ายไป Ward (Transfer To Ward)</summary>
+    public string TransferToWard { get; set; } = string.Empty;
+
     /// <summary>วันที่ D/C (Discharge Date)</summary>
     public DateTime? DischargeDate { get; set; }
 

@@ -145,6 +145,44 @@
                         <span class="text-danger" asp-validation-for="Input.DischargeType"></span>
                     </div>
 
+                    <div class="col-md-3 mb-3">
+                        <label for="TransferFromWard" class="form-label">Transfer From Ward</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="TransferFromWard" 
+                            asp-for="Input.TransferFromWard" 
+                            list="wardNameList"
+                            placeholder="Type to search wards..."
+                            autocomplete="off">
+                        <datalist id="wardNameList">
+                            @foreach (var wardName in Model.WardNames)
+                            {
+                                <option value="@wardName"></option>
+                            }
+                        </datalist>
+                        <span class="text-danger" asp-validation-for="Input.TransferFromWard"></span>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="TransferToWard" class="form-label">Transfer To Ward</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="TransferToWard" 
+                            asp-for="Input.TransferToWard" 
+                            list="wardNameList2"
+                            placeholder="Type to search wards..."
+                            autocomplete="off">
+                        <datalist id="wardNameList2">
+                            @foreach (var wardName in Model.WardNames)
+                            {
+                                <option value="@wardName"></option>
+                            }
+                        </datalist>
+                        <span class="text-danger" asp-validation-for="Input.TransferToWard"></span>
+                    </div>
+
                     <!-- Medical Information Section -->
                     <div class="col-12 mb-4 mt-3">
                         <h5 class="border-bottom pb-2">Medical Information</h5>
