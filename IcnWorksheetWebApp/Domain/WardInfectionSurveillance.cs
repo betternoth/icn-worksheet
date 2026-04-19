@@ -18,6 +18,7 @@ public class WardInfectionSurveillance : Entity
     public DateTime? TransferOutDate1 { get; set; }
     public DateTime? TransferInDate1 { get; set; }
     public DateTime? DischargeDate { get; set; }
+    public string DischargeType { get; set; } = string.Empty;
     public string Diagnosis { get; set; } = string.Empty;
     public string InfectionSite { get; set; } = string.Empty;
     public string SpecimenType { get; set; } = string.Empty;

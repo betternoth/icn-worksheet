@@ -134,6 +134,16 @@
                         <span class="text-danger" asp-validation-for="Input.DischargeDate"></span>
                     </div>
 
+                    <div class="col-md-3 mb-3">
+                        <label for="DischargeType" class="form-label">Discharge Type</label>
+                        <select class="form-control" id="DischargeType" asp-for="Input.DischargeType">
+                            <option value="">Select Discharge Type</option>
+                            <option value="Alive">Alive</option>
+                            <option value="Dead">Dead</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="Input.DischargeType"></span>
+                    </div>
+
                     <!-- Medical Information Section -->
                     <div class="col-12 mb-4 mt-3">
                         <h5 class="border-bottom pb-2">Medical Information</h5>

@@ -42,6 +42,9 @@ public class WardInfectionSurveillanceDto : BaseDto
     /// <summary>วันที่ D/C (Discharge Date)</summary>
     public DateTime? DischargeDate { get; set; }
 
+    /// <summary>ประเภทการ D/C (Discharge Type) - Alive or Dead</summary>
+    public string DischargeType { get; set; } = string.Empty;
+
     /// <summary>Dx (Diagnosis)</summary>
     public string Diagnosis { get; set; } = string.Empty;
 
