@@ -9,8 +9,8 @@ public class WardInfectionSurveillance : Entity
     public string WardName { get; set; } = string.Empty;
     public int Month { get; set; }
     public int Year { get; set; }
-    public string PatientName { get; set; } = string.Empty;
-    public string HospitalNumber { get; set; } = string.Empty;
+    public int PatientId { get; set; }
+    public Patient? Patient { get; set; }
     public string AdmissionNumber { get; set; } = string.Empty;
     public string Gender { get; set; } = string.Empty;
     public int Age { get; set; }

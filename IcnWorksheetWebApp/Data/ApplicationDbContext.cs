@@ -56,14 +56,17 @@ public class ApplicationDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(100);
 
-            entity.Property(e => e.HospitalNumber)
-                .HasMaxLength(50);
-
-            entity.Property(e => e.PatientName)
-                .HasMaxLength(200);
-
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            // Configure foreign key to Patient
+            entity.HasOne(e => e.Patient)
+                .WithMany()
+                .HasForeignKey(e => e.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Create index on PatientId
+            entity.HasIndex(e => e.PatientId);
         });
 
         // Configure Ward entity

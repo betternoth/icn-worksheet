@@ -72,15 +72,15 @@
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <label for="PatientName" class="form-label">Patient Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="PatientName" asp-for="Input.PatientName" required>
-                        <span class="text-danger" asp-validation-for="Input.PatientName"></span>
-                    </div>
-
-                    <div class="col-md-3 mb-3">
-                        <label for="HospitalNumber" class="form-label">HN (Hospital Number) <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="HospitalNumber" asp-for="Input.HospitalNumber" required>
-                        <span class="text-danger" asp-validation-for="Input.HospitalNumber"></span>
+                        <label for="PatientId" class="form-label">Select Patient <span class="text-danger">*</span></label>
+                        <select class="form-control" id="PatientId" asp-for="Input.PatientId" required>
+                            <option value="">-- Select Patient --</option>
+                            @foreach (var patient in Model.Patients)
+                            {
+                                <option value="@patient.Id">@patient.FullName (HN: @patient.HospitalNumber)</option>
+                            }
+                        </select>
+                        <span class="text-danger" asp-validation-for="Input.PatientId"></span>
                     </div>
 
                     <div class="col-md-3 mb-3">

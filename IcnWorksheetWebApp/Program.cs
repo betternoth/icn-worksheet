@@ -16,6 +16,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 // Infrastructure Layer: Specific Repositories
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IWardRepository, WardRepository>();
+builder.Services.AddScoped<IWardInfectionRepository, WardInfectionRepository>();
 
 // Application Layer: Services
 // Add your application services here

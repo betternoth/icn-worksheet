@@ -15,11 +15,17 @@ public class WardInfectionSurveillanceDto : BaseDto
     /// <summary>ปี (Year)</summary>
     public int Year { get; set; }
 
-    /// <summary>ชื่อผู้ป่วย (Patient Name)</summary>
-    public string PatientName { get; set; } = string.Empty;
+    /// <summary>Patient ID (Foreign Key)</summary>
+    public int PatientId { get; set; }
 
-    /// <summary>HN (Hospital Number)</summary>
-    public string HospitalNumber { get; set; } = string.Empty;
+    /// <summary>ชื่อผู้ป่วย (First Name)</summary>
+    public string FirstName { get; set; } = string.Empty;
+
+    /// <summary>นามสกุล (Last Name)</summary>
+    public string LastName { get; set; } = string.Empty;
+
+    /// <summary>Full Name (Computed)</summary>
+    public string PatientName => $"{FirstName} {LastName}".Trim();
 
     /// <summary>AN (Admission Number)</summary>
     public string AdmissionNumber { get; set; } = string.Empty;
